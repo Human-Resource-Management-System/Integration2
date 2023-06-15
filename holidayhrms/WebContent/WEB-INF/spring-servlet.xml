@@ -61,7 +61,14 @@
     <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
-
+	
+	
+	<!-- File uploads -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760" /> <!-- Maximum file size (in bytes) -->
+		<property name="maxInMemorySize" value="1048576" /> <!-- Maximum in-memory size (in bytes) -->
+	</bean>
+	
     <!-- Configure the Hibernate transaction manager -->
     <bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
@@ -78,5 +85,8 @@
     <bean id="es" class="models.Employee" />
     <bean id="rd" class="DAO.ReferenceDAO" />
     <bean id="rs" class="service.ReferenceService" />
+    <bean id="prd" class="DAO.PayRollDaoImpl" autowire="byName"/>
+    <bean id="employeeAttendanceService" class="service.EmployeeAttendanceService" autowire="byName"/>
+    <bean id="employeeAttendanceDAO" class="DAO.EmployeeAttendanceDAOImpl" autowire="byName"/>
     
 </beans>

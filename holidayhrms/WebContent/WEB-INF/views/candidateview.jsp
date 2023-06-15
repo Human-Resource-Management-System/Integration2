@@ -6,34 +6,37 @@
     <meta charset="UTF-8">
     <title>Candidate List</title>
     <style>
-      
         h1 {
             color: #333;
             margin-bottom: 30px;
             text-align: center;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            color: #333;
-            text-transform: uppercase;
-        }
-
+       .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    th, td {
+        padding: 10px 13px;
+    }
+    th {
+        background-color: #333;
+        color: #fff;
+        font-weight: bold;
+        align:center;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    tr:hover {
+        background-color: #ddd;
+    }
 
         .no-employees {
             margin-top: 20px;
@@ -41,24 +44,7 @@
             text-align: center;
         }
 
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .table-container::-webkit-scrollbar {
-            height: 8px;
-            background-color: #f4f4f4;
-        }
-
-        .table-container::-webkit-scrollbar-thumb {
-            background-color: #888;
-            border-radius: 4px;
-        }
-
-        .table-container::-webkit-scrollbar-track {
-            background-color: #f4f4f4;
-        }
-
+        
         /* Custom styles */
         .view-link {
             color: #007bff;
@@ -68,47 +54,64 @@
         .view-link:hover {
             text-decoration: underline;
         }
-         .center {
+
+        .center {
             text-align: center;
             margin-top: 20px;
         }
+        
+        .add-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+   		.add-button button {
+            height: 40px;
+            width: 120px;
+            background-color: #358eb8;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+      background-color: #45a049;
+    }
     </style>
 </head>
 <body>
-    <h1>Candidate List</h1>
-    <%-- Retrieve the list of employees from the model --%>
-    <% List<Object[]> candidates = (List<Object[]>) request.getAttribute("candidates"); %>
-    <%-- Check if the list is not null and not empty --%>
-    <% if (candidates != null && !candidates.isEmpty()) { %>
-        <table>
-            <thead>
-                <tr>
-                    <th>Candidate ID</th>
-                    <th>First Name</th>
-                    <th>Middle Name</th>
-                    <th>Last Name</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%-- Iterate over the list of employees and display the data --%>
-                <% for (Object[] candidate : candidates) { %>
+    <div class="table-container">
+        <h1>Candidate List</h1>
+        <%-- Retrieve the list of employees from the model --%>
+        <% List<Object[]> candidates = (List<Object[]>) request.getAttribute("candidates"); %>
+        <%-- Check if the list is not null and not empty --%>
+        <% if (candidates != null && !candidates.isEmpty()) { %>
+            <table>
+                <thead>
                     <tr>
-                        <td><%= candidate[0] %></td>
-                        <td><%= candidate[1] %></td>
-                        <td><%= candidate[2] %></td>
-                        <td><%= candidate[3] %></td>
-                       <td><a class="view-link" href="viewcandidate?id=<%= candidate[0] %>">View</a></td>
+                        <th>Candidate ID</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>View</th>
                     </tr>
-                <% } %>
-            </tbody>
-        </table>
-        <div class="center">
-        <button onclick="window.location.href='candidate'">Add</button>
-        
-       </div>
-    <% } else { %>
-        <p class="no-employees">No candidates found.</p>
-    <% } %>
+                </thead>
+                <tbody>
+                    <%-- Iterate over the list of employees and display the data --%>
+                    <% for (Object[] candidate : candidates) { %>
+                        <tr>
+                            <td align="center"><%= candidate[0] %></td>
+                            <td align="center"><%= candidate[1] %></td>
+                            <td align="center"><%= candidate[2] %></td>
+                            <td align="center"><%= candidate[3] %></td>
+                            <td align="center"><a class="view-link" href="viewcandidate?id=<%= candidate[0] %>">View</a></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="no-employees">No candidates found.</p>
+        <% } %>
+        <div class="add-button">
+            <button onclick="window.location.href='candidate'">ADD</button>
+        </div>
+    </div>
 </body>
 </html>

@@ -135,14 +135,8 @@
   z-index: 100;
   background: #e7f2fd;
 }
-.main h1 {
-  color: #11101d;
-  font-size: 40px;
-  text-align: center;
-}
-   
-<style>
 
+   
 
 
 .row {
@@ -199,7 +193,7 @@ canvas {
 </style>
 
    
-   </style>
+
  
  
  
@@ -275,7 +269,7 @@ canvas {
             <a href="#"><span class="icon"><i class="ri-booklet-line"></i></span> Ref Documents</a>
           </li>
           <li class="item">
-            <a href="#"><span class="icon"><i class="ri-file-line"></i></span> Payslips</a>
+             <a onclick="getPayrolls()"><i class="ri-check-double-line"></i> Payrolls</a>
           </li>
           <li class="item">
             <a href="#"><span class="icon"><i class="ri-settings-3-line"></i></span> Settings</a>
@@ -534,6 +528,23 @@ var fieldMessage = $('<div class="field-message" id="msg1">No of leaves taken</d
     	  });
     	}
 
+ function getPayrolls() {
+	 
+	 $(".main").empty();
+    	  $.ajax({
+    	    type: "POST",
+    	    url: "payrolls",
+    	    data: {},
+    	    success: function(response) {
+    	      var containerDiv = $(".main");
+    	      containerDiv.html(response);
+    	     
+    	    },
+    	    error: function() {
+    	      alert("Error occurred. Please try again later.");
+    	    }
+    	  });
+    	}
     
     
     function getyourtHolidays() {

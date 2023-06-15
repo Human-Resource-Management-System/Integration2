@@ -197,7 +197,22 @@
   	  });
   	}
 
-    
+    function getPayrolls() {
+   	 
+       	  $.ajax({
+       	    type: "POST",
+       	    url: "getpayroll",
+       	    data: {},
+       	    success: function(response) {
+       	      var containerDiv = $("#main");
+       	      containerDiv.html(response);
+       	     
+       	    },
+       	    error: function() {
+       	      alert("Error occurred. Please try again later.");
+       	    }
+       	  });
+       	}
     
     function getyourtHolidays() {
   	  $.ajax({
@@ -261,6 +276,20 @@
   	  });
   	}
     
+    function uploadAttendance() {
+    	  $.ajax({
+    	    type: "GET",
+    	    url: "addattendance",
+    	    data: {},
+    	    success: function(response) {
+    	      var containerDiv = $("#main");
+    	      containerDiv.html(response);
+    	    },
+    	    error: function() {
+    	      alert("Error occurred. Please try again later.");
+    	    }
+    	  });
+    	}
     
     </script>
 
@@ -369,7 +398,10 @@
                 Back to ALMS
               </div>
               <li class="item">
-                <a href="#"><i class="ri-file-list-line"></i> Attendance</a>
+                <a href="#"><i class="ri-file-list-line"></i> View Attendance</a>
+              </li>
+               <li class="item">
+                <a  onclick = "uploadAttendance();"><i class="ri-file-list-line"></i> Upload Attendance</a>
               </li>
               <li class="item">
                 <a href="#"><i class="ri-check-double-line"></i> Leaves</a>
@@ -404,7 +436,7 @@
           </li>
           
           <li class="item">
-            <a href="#"><span class="icon"><i class="ri-booklet-line"></i></span> Payrolls</a>
+             <a onclick="getPayrolls()"><i class="ri-check-double-line"></i> Payrolls</a>
           </li>
           <li class="item">
             <a href="#"><span class="icon"><i class="ri-settings-3-line"></i></span> Settings</a>
