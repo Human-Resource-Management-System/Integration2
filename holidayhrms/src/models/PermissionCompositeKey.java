@@ -3,12 +3,24 @@ package models;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class PermissionCompositeKey implements Serializable {
-	private int empl_id;
+
+	@Column(name = "empl_id")
+	private int id;
+
 	private int ep_index;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getEp_index() {
 		return ep_index;
@@ -18,14 +30,6 @@ public class PermissionCompositeKey implements Serializable {
 		this.ep_index = ep_index;
 	}
 
-	public int getEmpl_id() {
-		return empl_id;
-	}
-
-	public void setEmpl_id(int empl_id) {
-		this.empl_id = empl_id;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -33,12 +37,12 @@ public class PermissionCompositeKey implements Serializable {
 		if (obj == null || getClass() != obj.getClass())
 			return false;
 		PermissionCompositeKey that = (PermissionCompositeKey) obj;
-		return empl_id == that.empl_id && ep_index == that.ep_index;
+		return id == that.id && ep_index == that.ep_index;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(empl_id, ep_index);
+		return Objects.hash(id, ep_index);
 	}
 
 }

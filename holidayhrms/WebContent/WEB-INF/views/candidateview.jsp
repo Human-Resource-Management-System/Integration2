@@ -110,7 +110,24 @@
             <p class="no-employees">No candidates found.</p>
         <% } %>
         <div class="add-button">
-            <button onclick="window.location.href='candidate'">ADD</button>
+           <button onclick="loadCandidatePage()">ADD</button>
+
+<script>
+  function loadCandidatePage() {
+    $.ajax({
+      url: "candidate",
+      success: function(response) {
+        $(".main").html(response);
+      },
+      error: function() {
+        alert("Error occurred. Please try again later.");
+      }
+    });
+  }
+</script>
+
+            
+            
         </div>
     </div>
 </body>

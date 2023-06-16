@@ -56,46 +56,96 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
+        /* Additional styling */
+        .form-container {
+            margin-top: 40px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-field label {
+            font-weight: bold;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="date"],
+        .form-field input[type="email"],
+        .form-field textarea {
+            padding: 10px;
+        }
     </style>
-    
 </head>
 <body>
-    <h1>Enter Candidate Details</h1>
-    <form method="post" action="success">
-        <label for="firstName">First Name:</label>
-        <input type="text" name="firstName" id="firstName" required><br><br>
-        
-        <label for="middleName">Middle Name:</label>
-        <input type="text" name="middleName" id="middleName"><br><br>
-        
-        <label for="lastName">Last Name:</label>
-        <input type="text" name="lastName" id="lastName" required><br><br>
-        
-        <label for="rDate">Registration Date:</label>
-        <input type="date" name="rDate" id="rDate" required><br><br>
-        
-        <label for="gender">Gender:</label>
-        <input type="text" name="gender" id="gender" required><br><br>
-        
-        <label for="dob">Date of Birth:</label>
-        <input type="date" name="dob" id="dob" required><br><br>
-        
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email" required><br><br>
-        
-        <label for="mobile">Mobile Number:</label>
-        <input type="text" name="mobile" id="mobile" required><br><br>
-        
-        <label for="address">Address:</label>
-        <textarea name="address" id="address" rows="3" required></textarea><br><br>
-        
-        <label for="ludate">Last Update Date:</label>
-        <input type="date" name="ludate" id="ludate" required><br><br>
-        
-        <label for="status">Status:</label>
-        <input type="text" name="status" id="status" required><br><br>
-        
-        <input type="submit" value="Submit">
-    </form>
+    <div class="form-container">
+        <h1 class="form-header">Enter Candidate Details</h1>
+        <form method="post" action="success">
+            <div class="form-field">
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName" id="firstName" required>
+            </div>
+
+            <div class="form-field">
+                <label for="middleName">Middle Name:</label>
+                <input type="text" name="middleName" id="middleName">
+            </div>
+
+            <div class="form-field">
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName" id="lastName" required>
+            </div>
+
+            <div class="form-field">
+                <label for="rDate">Registration Date:</label>
+                <input type="date" name="rDate" id="rDate" required>
+            </div>
+
+            <div class="form-field">
+                <label for="gender">Gender:</label>
+                <input type="text" name="gender" id="gender" required>
+            </div>
+
+            <div class="form-field">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" id="dob" required>
+            </div>
+
+            <div class="form-field">
+                <label for="email">Email:</label>
+                <input type="text" name="email" id="email" required>
+            </div>
+
+            <div class="form-field">
+                <label for="mobile">Mobile Number:</label>
+                <input type="text" name="mobile" id="mobile" required>
+            </div>
+
+            <div class="form-field">
+                <label for="address">Address:</label>
+                <textarea name="address" id="address" rows="3" required></textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="ludate">Last Update Date:</label>
+                <input type="date" name="ludate" id="ludate" required>
+            </div>
+
+            <div class="form-field">
+                <label for="status">Status:</label>
+                <input type="text" name="status" id="status" required>
+            </div>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>

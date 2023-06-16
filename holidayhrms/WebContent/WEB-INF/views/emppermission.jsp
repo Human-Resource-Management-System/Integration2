@@ -51,33 +51,54 @@
       background-color: #45a049;
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var today = new Date().toISOString().split("T")[0];
+      document.getElementById("current-date").setAttribute("max", today);
+      document.getElementById("current-date").setAttribute("min", today);
+    });
+
+    function permissionApplied(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      $.ajax({
+        type: "POST",
+        url: "applyPermission",
+        data: $("#permissionForm").serialize(), // Serialize form data
+        success: function(response) {
+          var containerDiv = $(".main");
+          containerDiv.html(response);
+        },
+        error: function() {
+          alert("Error occurred. Please try again later.");
+        }
+      });
+    }
+  </script>
 </head>
 <body>
   <div class="container">
-    <form action="applyPermission" method="post">
-      <label for="id">ID:</label>
-      <input type="text" id="id" name="id" required>
+    <form id="permissionForm" action="applyPermission" method="post">
+  <label for="id">ID:</label>
+  <input type="number" id="id" name="cKey.id" required>
 
-      <label for="current-date">Current Date:</label>
-      <input type="date" id="current-date" name="current-date" required max="yyyy-mm-dd" min="yyyy-mm-dd">
+  <label for="current-date">Current Date:</label>
+  <input type="date" id="current-date" name="app.current_date" required>
 
-      <label for="start-time">Permission Start Time:</label>
-      <input type="time" id="start-time" name="start-time" required>
+  <label for="start-time">Permission Start Time:</label>
+  <input type="time" id="start-time" name="app.start_time" required>
 
-      <label for="end-time">Permission End Time:</label>
-      <input type="time" id="end-time" name="end-time" required>
+  <label for="end-time">Permission End Time:</label>
+  <input type="time" id="end-time" name="app.end_time" required>
 
-      <label for="reason">Reason:</label>
-      <textarea id="reason" name="reason" required></textarea>
+  <label for="reason">Reason:</label>
+  <textarea id="reason" name="app.reason" required></textarea>
 
-      <button type="submit">Apply</button>
-    </form>
+  <button type="submit" onclick="permissionApplied(event)">Apply</button>
+</form>
+
   </div>
-
-  <script>
-    var today = new Date().toISOString().split("T")[0];
-    document.getElementById("current-date").setAttribute("max", today);
-    document.getElementById("current-date").setAttribute("min", today);
-  </script>
+  <div class="main"></div>
 </body>
 </html>
