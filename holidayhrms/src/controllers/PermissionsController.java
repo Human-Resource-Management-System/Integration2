@@ -1,92 +1,105 @@
 package controllers;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import DAO.ApplyPermissionDaoImpl;
 import models.ApplyPermissions;
+import models.PermissionAdminModel;
 import models.PermissionCompositeKey;
+import models.PermissionInputModel;
 
 @Controller
 public class PermissionsController {
 
-	ApplyPermissionDaoImpl apd;
-	ApplyPermissions ap;
-	PermissionCompositeKey compositeKey;
+	private ApplyPermissionDaoImpl apd;
+	private ApplyPermissions ap;
+	private PermissionCompositeKey pcompositeKey;
 
 	@Autowired
 	public PermissionsController(ApplyPermissionDaoImpl apdi, ApplyPermissions app, PermissionCompositeKey cKey) {
 		apd = apdi;
 		ap = app;
-		compositeKey = cKey;
+		pcompositeKey = cKey;
 	}
 
 	@RequestMapping(value = "/getpermissions")
-	public String getEmpPermissions() {
+	public String applypermission() {
 		return "emppermission";
 	}
 
-	// @RequestMapping(value = "/applyPermission")
-	// public String applyPermission(@RequestParam("id") int id, @RequestParam("current-date") String currentdate,
-	// @RequestParam("start-time") String sttime, @RequestParam("end-time") String endtime,
-	// @RequestParam("reason") String reason) {
-	//
-	// System.out.println(id);
-	// System.out.println(currentdate);
-	// System.out.println(sttime);
-	// System.out.println(endtime);
-	// System.out.println(reason);
-	//
-	// Date currentDate1 = Date.valueOf(currentdate);
-	//
-	// Time endtime1 = Time.valueOf(endtime + ":00"); // converting string to time for start time
-	// Time sttime1 = Time.valueOf(sttime + ":00"); // converting string to time for end time
-	// int i = 1;
-	//
-	// int indexval = apd.getNextPermissionIndex(id); // for getting the next index value
-	//
-	// // PermissionCompositeKey compositeKey = new PermissionCompositeKey();
-	// compositeKey.setEmpl_id(id);
-	// compositeKey.setEp_index(indexval);
-	//
-	// // ApplyPermissions applyPermissions = new ApplyPermissions();
-	// // applyPermissions.setId(compositeKey);
-	// // applyPermissions.setEprq_date(currentDate1);
-	// // applyPermissions.setEprq_sttime(sttime1);
-	// // applyPermissions.setEprq_endtime(endtime1);
-	// // applyPermissions.setReason(reason);
-	// // System.out.println(i);
-	// // apd.persist(applyPermissions);
-	//
-	// ap.setId(compositeKey);
-	// ap.setEprq_date(currentDate1);
-	// ap.setEprq_sttime(sttime1);
-	// ap.setEprq_endtime(endtime1);
-	// ap.setReason(reason);
-	//
-	// apd.persist(ap);
-	//
-	// return "permissionfinal";
-	// }
+	@RequestMapping(value = "/applyPermission", method = RequestMethod.POST)
+	public ResponseEntity<String> applyPermission(@ModelAttribute PermissionInputModel permissionInput) {
+		try {
+			ap.setCurrent_date(Date.valueOf(permissionInput.getCurrent_date()));
 
-	@RequestMapping(value = "/applyPermission")
-	public String applyPermission(@ModelAttribute("app") ApplyPermissions app,
-			@ModelAttribute("cKey") PermissionCompositeKey cKey) {
+			// Convert the start and end time strings to Time objects
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			LocalTime startTime = LocalTime.parse(permissionInput.getStart_time(), formatter);
+			LocalTime endTime = LocalTime.parse(permissionInput.getEnd_time(), formatter);
 
-		app.setId(cKey);
+			ap.setStart_time(Time.valueOf(startTime));
+			ap.setEnd_time(Time.valueOf(endTime));
+			ap.setReason(permissionInput.getReason());
 
-		apd.persist(app);
+			pcompositeKey.setId(permissionInput.getId());
+			int index = apd.getNextPermissionIndex(permissionInput.getId());
+			pcompositeKey.setEp_index(index);
 
-		return "permissionfinal";
+			ap.setId(pcompositeKey);
+
+			apd.persist(ap);
+
+			return ResponseEntity.ok("success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = "Internal Server Error";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+
+	@RequestMapping(value = "/adminviewpermissions")
+	public String adminViewpermission(Model model) {
+
+		List<ApplyPermissions> permissions = apd.adminViewPermission();
+		model.addAttribute("permissions", permissions);
+		return "adminviewpermission";
+	}
+
+	@RequestMapping(value = "/acceptpermissions")
+	public ResponseEntity<String> acceptpermission(@ModelAttribute PermissionAdminModel pm) {
+		try {
+
+			return ResponseEntity.ok("success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = "Internal Server Error";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
+	}
+
+	@RequestMapping(value = "/rejectpermissions")
+	public ResponseEntity<String> rejectpermission(@ModelAttribute PermissionAdminModel pm) {
+		try {
+
+			return ResponseEntity.ok("success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorMessage = "Internal Server Error";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		}
 	}
 
 }
-
-// getMonthlyPermissions()
-
-// viewPermission()
-// updatePermissionStatus()
-// getApprovedPermissions() to be approved
-// showApprovals() those which are approved by admin

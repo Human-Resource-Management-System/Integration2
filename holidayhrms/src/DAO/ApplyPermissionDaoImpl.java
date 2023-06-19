@@ -1,5 +1,7 @@
 package DAO;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -29,4 +31,10 @@ public class ApplyPermissionDaoImpl {
 		query.setParameter("empl_id", employeeId);
 		return (Integer) query.getSingleResult();
 	}
+
+	public List<ApplyPermissions> adminViewPermission() {
+		return em.createQuery("Select ap from ApplyPermissions ap").getResultList();
+	}
+
+	public statusChange(int  emplo)
 }

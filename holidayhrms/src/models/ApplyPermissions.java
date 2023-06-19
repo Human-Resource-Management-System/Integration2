@@ -27,6 +27,39 @@ public class ApplyPermissions {
 	@Column(name = "reason")
 	private String reason;
 
+	@Column(name = "eprq_status")
+	private String eprq_status;
+
+	@Column(name = "eprq_approvedby")
+	private String eprq_approvedby;
+
+	@Column(name = "ep_remarks")
+	private String ep_remarks;
+
+	public String getEprq_status() {
+		return eprq_status;
+	}
+
+	public void setEprq_status(String eprq_status) {
+		this.eprq_status = eprq_status;
+	}
+
+	public String getEprq_approvedby() {
+		return eprq_approvedby;
+	}
+
+	public void setEprq_approvedby(String eprq_approvedby) {
+		this.eprq_approvedby = eprq_approvedby;
+	}
+
+	public String getEp_remarks() {
+		return ep_remarks;
+	}
+
+	public void setEp_remarks(String ep_remarks) {
+		this.ep_remarks = ep_remarks;
+	}
+
 	public PermissionCompositeKey getId() {
 		return id;
 	}

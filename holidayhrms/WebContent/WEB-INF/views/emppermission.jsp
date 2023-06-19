@@ -81,19 +81,19 @@
   <div class="container">
     <form id="permissionForm" action="applyPermission" method="post">
   <label for="id">ID:</label>
-  <input type="number" id="id" name="cKey.id" required>
+  <input type="number" id="id" name="id" required>
 
   <label for="current-date">Current Date:</label>
-  <input type="date" id="current-date" name="app.current_date" required>
+  <input type="date" id="current-date" name="current_date" required>
 
   <label for="start-time">Permission Start Time:</label>
-  <input type="time" id="start-time" name="app.start_time" required>
+  <input type="time" id="start-time" name="start_time" required>
 
   <label for="end-time">Permission End Time:</label>
-  <input type="time" id="end-time" name="app.end_time" required>
+  <input type="time" id="end-time" name="end_time" required>
 
   <label for="reason">Reason:</label>
-  <textarea id="reason" name="app.reason" required></textarea>
+  <textarea id="reason" name="reason" required></textarea>
 
   <button type="submit" onclick="permissionApplied(event)">Apply</button>
 </form>

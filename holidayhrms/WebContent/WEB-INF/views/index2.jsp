@@ -566,9 +566,8 @@ var fieldMessage = $('<div class="field-message" id="msg1">No of leaves taken</d
     
     function getPermissions() {
   	  $.ajax({
-  	    type: "POST",
+  	    type: "GET",
   	    url: "getpermissions",
-  	    data: {},
   	    success: function(response) {
   	      var containerDiv = $(".main");
   	      containerDiv.html(response);
